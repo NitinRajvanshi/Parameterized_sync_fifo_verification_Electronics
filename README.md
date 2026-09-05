@@ -1,58 +1,44 @@
-# 🚀 Parameterized Synchronous FIFO — RTL Verification
+# 🚀 Parameterized Synchronous FIFO — SystemVerilog Verification
 
-<p align="center">
-
-**A complete SystemVerilog RTL verification project**
-
-Directed Testing • Randomized Testing • Scoreboarding • Coverage • SVA • Bug Injection • Class-Based Verification
-
-</p>
+> A complete RTL verification project demonstrating directed testing, randomized verification, scoreboarding, functional coverage, SVA, bug injection, and class-based verification.
 
 ---
 
-## ⚡ Project at a Glance
+## 📌 Project Overview
+
+This project implements a **parameterized synchronous FIFO** and develops a verification environment progressively from basic directed testing to a class-based verification architecture.
+
+The main objective was not only to verify that the FIFO works, but also to verify that the **verification environment can detect intentionally injected RTL bugs**.
+
+### Final Results
 
 | Metric | Result |
 |---|---:|
-| FIFO Type | Synchronous |
+| FIFO Type | Synchronous FIFO |
 | Data Width | 8 bits |
 | Test Depth | 5 |
 | Regression | 10,000 transactions |
 | Functional Coverage | **100% (7/7)** |
 | Scoreboard Errors | **0** |
 | RTL Bugs Injected | **3** |
-| SVA Checks | **3** |
 | Non-Power-of-2 Depths Tested | **3, 5, 7, 10, 16** |
 | Final Regression | **✅ PASSED** |
 
 ---
 
-## 🧠 What I Built
+## 🏗️ FIFO Architecture
 
-This project started with a parameterized FIFO RTL and evolved into a
-multi-layer verification environment.
+The FIFO contains:
 
-The verification strategy was built progressively:
+- Memory array
+- Write pointer
+- Read pointer
+- Occupancy counter
+- Full flag
+- Empty flag
 
-```text
-                 ┌──────────────────┐
-                 │   FIFO RTL DUT   │
-                 └────────┬─────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        │                 │                 │
-        ▼                 ▼                 ▼
-   Directed Tests   Randomized Tests       SVA
-        │                 │                 │
-        └─────────────────┼─────────────────┘
-                          ▼
-                    Scoreboard
-                          │
-                          ▼
-                     Coverage
-                          │
-                          ▼
-                 Bug Injection
-                          │
-                          ▼
-              Class-Based Verification
+### Parameters
+
+```systemverilog
+DATA_WIDTH = 8
+DEPTH      = 5
