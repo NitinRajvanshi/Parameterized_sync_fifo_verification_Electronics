@@ -41,6 +41,40 @@ The FIFO contains:
 
 ### Parameters
 
-```systemverilog
+systemverilog
 DATA_WIDTH = 8
 DEPTH      = 5
+
+The design is parameterized so that different FIFO widths and depths can be verified without modifying the core RTL.
+
+---
+
+## 🔄 FIFO Operation
+
+### Write Operation
+
+A write is accepted when:
+
+- `wr_en = 1`
+- FIFO is not full
+
+The write data is stored at the current write pointer and the pointer advances.
+
+### Read Operation
+
+A read is accepted when:
+
+- `rd_en = 1`
+- FIFO is not empty
+
+The data is read from the current read pointer and the pointer advances.
+
+### Simultaneous Read + Write
+
+The FIFO supports simultaneous read and write operations.
+
+An important corner case is **FULL + simultaneous READ/WRITE**. When the FIFO is full, a read occurring in the same cycle frees one location, allowing the write to proceed.
+
+```systemverilog
+wire do_read  = rd_en && !empty;
+wire do_write = wr_en && (!full || do_read);
